@@ -1,15 +1,15 @@
-const express = require('express');
-const db = require('./config/db')
-const cors = require('cors')
+import express, { json } from 'express';
+import { query } from './config/Db';
+import cors from 'cors';
 
 const app = express();
 const  PORT = 3002;
 app.use(cors());
-app.use(express.json())
+app.use(json())
 
 //get all surveys
 app.get("/api/get", (req, res)=>{
-  db.query("SELECT * from Survey", (err, result)=> {
+  query("SELECT * from Survey", (err, result)=> {
     if(err) {
       console.log(err)
     }
@@ -19,7 +19,7 @@ app.get("/api/get", (req, res)=>{
 //get a specific survey
 app.get("/api/getFromID/:id", (req, res)=>{
   const id = req.params.id;
-  db.query("SELECT * FROM Survey WHERE Survey_ID = ?", id, (err, result)=>{
+  query("SELECT * FROM Survey WHERE Survey_ID = ?", id, (err, result)=>{
     if(err) {
       console.log(err)
     }
