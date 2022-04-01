@@ -1,21 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const linkStyle = {
-    color: 'orange',
-    padding: 10,
-  };
+
 export default function Navbar() {
     return (
         
-        <div className="Navbar">
+        <div className="navbar">
             <nav>
-                <Link to="/" style={linkStyle}>Intro</Link>
-                <Link to="/home" style={linkStyle}>Home</Link>
-                <Link to="/profile" style={linkStyle}>Profile</Link>
-                <Link to="/createSurvey" style={linkStyle}>Create Survey</Link>
-                <Link to="/mySurveys" style={linkStyle}>My Surveys</Link>
-                <Link to="/stats" style={linkStyle}>Stats</Link>
+                <Link to="/" >Intro</Link>
+                <Link to="/home" >Home</Link>
+                <Link to="/profile" >Profile</Link>
+                <Link to="/createSurvey" >Create Survey</Link>
+                <Link to="/mySurveys">My Surveys</Link>
+                <Link to="/stats">Stats</Link>
             </nav>
         </div>
     )
