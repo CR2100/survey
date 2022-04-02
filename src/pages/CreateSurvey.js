@@ -2,15 +2,15 @@ import React, { useState } from 'react'
 
 const CreateSurvey = () => {
     const [title, setTitle] = useState('');
-    const [formValues, setFormValues] = useState([{ title: "", question : ""}])
+    const [formValues, setFormValues] = useState([{ question: ""}])
     let handleChange = (i, e) => {
         let newFormValues = [...formValues];
-        newFormValues[i][e.target.title] = e.target.value;
+        newFormValues[i][e.target.name] = e.target.value;
         setFormValues(newFormValues);
      }
         
     let addFormFields = () => {
-        setFormValues([...formValues, { title: "", question: "" }])
+        setFormValues([...formValues, { question: "" }])
      }
     
     let removeFormFields = (i) => {
@@ -20,7 +20,9 @@ const CreateSurvey = () => {
     }
     let handleSubmit = (event) => {
         event.preventDefault();
-        alert(JSON.stringify(formValues));
+        const survey = {title, formValues}
+        alert(JSON.stringify(survey));
+        console.log(survey);
     }
     return (
         <form  onSubmit={handleSubmit}>
