@@ -7,7 +7,7 @@ import CreateSurvey from './pages/CreateSurvey';
 import MySurveys from './pages/MySurveys';
 import Stats from './pages/Stats';
 import Navbar from './components/Navbar';
-
+import LoginPage from './pages/LoginPage';
 function App() {
   return (
     <div className="App">
@@ -20,6 +20,7 @@ function App() {
           <Route path="/createSurvey" element={<CreateSurvey />} />
           <Route path="/mySurveys" element={<MySurveys />} />
           <Route path="/stats" element={<Stats />} />
+          <Route path="/loginPage" element={<LoginPage />} />
         </Routes>
       </Router>
     </div>
