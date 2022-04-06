@@ -1,4 +1,3 @@
-import Navbar from '../components/Navbar'
 import React from 'react'
 import { useState, useEffect } from 'react'
 
@@ -20,8 +19,7 @@ export default function MySurveys({currUser}) {
     }, [])
 
     return (
-        <div className="MySurveys">
-            <Navbar />
+        <div className="MySurveys">My Surveys
             <div className="DisplaySurveys">
                 {/* Map through the mySurveys variable and print out each survey */}
             </div>

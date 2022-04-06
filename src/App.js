@@ -11,9 +11,10 @@ import Navbar from './components/Navbar';
 
 // Using state to keep track of which user is logged in. Both the currUser variable and setCurrUser function will need to be passed as props 
   // to the file handles login / logout / register.
-const [currUser, setCurrUser] = useState({});
+
 
 function App() {
+  const [currUser, setCurrUser] = useState({});
   return (
     <div className="App">
       <Router>
