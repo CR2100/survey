@@ -1,4 +1,5 @@
 import './App.css';
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Intro from './pages/Intro';
 import Home from './pages/Home';
@@ -9,6 +10,7 @@ import Stats from './pages/Stats';
 import Navbar from './components/Navbar';
 import LoginPage from './pages/LoginPage';
 function App() {
+  const [currUser, setCurrUser] = useState({});
   return (
     <div className="App">
       <Router>
@@ -18,7 +20,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/createSurvey" element={<CreateSurvey />} />
-          <Route path="/mySurveys" element={<MySurveys />} />
+          <Route path="/mySurveys" element={<MySurveys currUser={currUser} />} />
           <Route path="/stats" element={<Stats />} />
           <Route path="/loginPage" element={<LoginPage />} />
         </Routes>
