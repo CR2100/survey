@@ -14,14 +14,14 @@ export default function LoginPage() {
         <div>
         <div className="create">
             <h2>Register</h2>
-            <label>Username</label>
-            <input type ="text" 
+            <label></label>
+            <input type ="text" placeholder="Username..."
             onChange={(e)=> {
                 setUsernameReg(e.target.value)
                 }}
             />
-            <label>Password</label>
-            <input type="text" 
+            <label></label>
+            <input type="text"  placeholder="Password..."
             onChange={(e)=> {
                 setPasswordReg(e.target.value)
                 }}
