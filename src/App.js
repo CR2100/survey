@@ -8,11 +8,7 @@ import CreateSurvey from './pages/CreateSurvey';
 import MySurveys from './pages/MySurveys';
 import Stats from './pages/Stats';
 import Navbar from './components/Navbar';
-
-// Using state to keep track of which user is logged in. Both the currUser variable and setCurrUser function will need to be passed as props 
-  // to the file handles login / logout / register.
-
-
+import LoginPage from './pages/LoginPage';
 function App() {
   const [currUser, setCurrUser] = useState({});
   return (
@@ -26,6 +22,7 @@ function App() {
           <Route path="/createSurvey" element={<CreateSurvey />} />
           <Route path="/mySurveys" element={<MySurveys currUser={currUser} />} />
           <Route path="/stats" element={<Stats />} />
+          <Route path="/loginPage" element={<LoginPage />} />
         </Routes>
       </Router>
     </div>

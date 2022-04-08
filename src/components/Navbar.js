@@ -13,6 +13,7 @@ export default function Navbar() {
                 <Link to="/createSurvey" >Create Survey</Link>
                 <Link to="/mySurveys">My Surveys</Link>
                 <Link to="/stats">Stats</Link>
+                <Link to="/loginPage">Login/Sign up</Link>
             </nav>
         </div>
     )
