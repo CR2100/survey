@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-
+import axios from 'axios';
 export default function LoginPage() {
     
     const [usernameReg, setUsernameReg] = useState('')
@@ -7,7 +7,27 @@ export default function LoginPage() {
     
     const register = () => {
         //send username and password to backend db
+       // console.log(usernameReg)
       console.log(usernameReg, passwordReg)
+      axios.post('http://localhost:3001/loginPage',
+      {
+          username: usernameReg,
+          password: passwordReg,
+          mode: "cors"
+      }
+      ,{}
+      ).then((response) => {
+        console.log(response)
+      }).catch(error => {
+        if (!error.response) {
+            // network error
+            this.errorStatus = 'Error: Network Error';
+        } else {
+            this.errorStatus = error.response.data.message;
+        }
+      })
+      
+      
     }
     
     return (
