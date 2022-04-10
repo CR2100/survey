@@ -1,7 +1,7 @@
 //import {dbServer, tunnelConfig, forwardConfig} from db.js
+
 const mysql = require('mysql2');
 const { Client } = require('ssh2');
-const sshClient = new Client();
 const connection = module.exports = function(){};
 const dbServer = {
     host: 'localhost',
@@ -24,10 +24,12 @@ const forwardConfig = {
 };
 
 connection.invokeQuery = function(sqlQuery, data){
+var sshClient = new Client();
 const SSHConnection = new Promise((resolve, reject) => {
   
     sshClient.on('ready', () => {
-        sshClient.forwardOut(
+
+        sshClient.forwardOut(   
         forwardConfig.srcHost,
         forwardConfig.srcPort,
         forwardConfig.dstHost,
@@ -47,14 +49,13 @@ const SSHConnection = new Promise((resolve, reject) => {
             });
             db.query(sqlQuery, function (err, rows) {
                 if(rows){
-                    console.log(rows)
                 }
-                          if (err) throw err
-                          console.log(rows);
-                          data(rows);
-                        })
+                          if (err) 
+                            throw err
+                          else
+                            data(rows);  
+                        })                
         });
-    }).connect(tunnelConfig);
+    }).connect(tunnelConfig)
 });
 }
-

@@ -1,5 +1,4 @@
 const connection = require('../src/connection')
-//const connection = require('../../src/connection.js')
 
 //database connection
 const express = require("express");
@@ -9,20 +8,10 @@ const bodyParser = require('body-parser');
 const bcrypt = require("bcrypt");
 const { chdir } = require("process");
 const saltRounds = 10;
-
 const app = express();
-
 //for sending informatino from frontend to backend
 app.use(cors());
 app.use(bodyParser.json());
-
-
-// const db = mysql.createConnection({
-//   host: "localhost",
-//   user: "group3",
-//   password: "olemiss2022",
-//   database: "survey_maker"
-// });
 app.get('/beans', function (req, res){
   const sqlStatement = "INSERT INTO Login (username, password) VALUES ('ididit', 'right');"
   connection.invokeQuery(sqlStatement, function(rows){
@@ -30,32 +19,50 @@ app.get('/beans', function (req, res){
   })
 })
 //insert user
-app.post("/register", (req, res) => {
+
+app.post("/register", async(req, res) => {
+  try{
   const username = req.body.username;
   const password = req.body.password;
-
-  bcrypt.compare(password, saltRounds, (err, hash) => {
-    if(err) {
-      console.log(err);
+  const hash = await bcrypt.hash(password, saltRounds);
+  //console.log(bcrypt.compareSync('fred', 10$8bASfVFjsISMkf7LoprtUe4EQ8YaX7OnVojYbIiUDOCUCV8CU8BCy)) // true)
+  
+    var sqlStatement = ('INSERT IGNORE INTO Login (username, password) VALUES (\''+username+'\',\''+hash+'\');')
+   await connection.invokeQuery(sqlStatement, function(rows){
+    console.log(rows.warningStatus) 
+    if(rows.warningStatus === 1){
+      res.status(201).json("user already exists")
+    }else{
+    res.status(200).send("all good!")
     }
-    db.query("INSERT INTO Login(username, password) VALUES(?, ?)",
-    [username, hash],
-    (err, result) => {
-      console.log(err);
-    });
+    })
+  }catch(e){
+    console.log(e);
+    res.status(500).send("something broke")
+  }
   });
-});
-
-app.post('/loginPage', (req, res) => {
+app.post('/login', async (req, res) => {
  
   var username = req.body.username;
   var password = req.body.password;
   //console.log(username)
-  var sqlStatement = ('INSERT INTO Login (username, password) VALUES (\''+username+'\',\''+password+'\');')
-  console.log(sqlStatement)
-  connection.invokeQuery(sqlStatement, function(rows){
-    console.log(rows)
-  })
+  var concat = ['\''+username+'\''].join('\',\'');
+  var sqlStatement = ('SELECT * FROM Login WHERE username ='+concat+';')
+  //console.log(sqlStatement)
+  
+ const user = await connection.invokeQuery(sqlStatement, async function(rows){
+ // console.log(rows[0])
+  if(rows[0] !== undefined){
+    const validPass = await bcrypt.compare(password, rows[0].password);
+    if (validPass){
+      res.status(200).json('valid username and password')
+    } else{
+      res.status(201).json('wrong password')
+    }
+  } else{
+    res.status(202).json('User not found')
+  }
+  });
 });
 
 //create a survey
@@ -77,14 +84,17 @@ app.post("/api/insertSurvey", (req, res) => {
 });
 
 //get all surveys
+
 app.get("/api/getAllSurvey", (req, res) => {
-  query("SELECT * from Survey", (err, result)=> {
-    if(err) {
-      console.log(err)
-    }
-  res.send(result)
-  }); 
-});
+//  var username = req.body.user;
+//var user = 1;
+  var sqlStatement = ('SELECT * from Survey WHERE User_ID ='+user)
+   connection.invokeQuery(sqlStatement, function(rows) {
+    console.log(rows)
+    res.send(rows)
+  })
+  }) 
+
 
 //get a specific survey
 app.get("/api/getSurveyID/:id", (req, res) => {
