@@ -86,7 +86,7 @@ app.post("/api/insertSurvey", (req, res) => {
 //get all surveys
 
 app.get("/api/getAllSurvey", (req, res) => {
-//  var username = req.body.user;
+  var username = req.body.user;
 //var user = 1;
   var sqlStatement = ('SELECT * from Survey WHERE User_ID ='+user)
    connection.invokeQuery(sqlStatement, function(rows) {
