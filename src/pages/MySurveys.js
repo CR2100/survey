@@ -11,11 +11,11 @@ export default function MySurveys({currUser}) {
         // Pass appropriate info into getMySurveys
          function getMySurveys(){
             // Call API to get all surveys for a given user
-         var user = localStorage.getItem("currUser");
-           axios.get("http://localhost:3001/api/getAllSurvey", user
-           
-           ).then(function (response) {
-            
+         var username = localStorage.getItem("currUser");
+
+           axios.post("http://localhost:3001/api/getUserSurveys", {
+               user: username
+         }).then(function (response) {
             console.log(response);
             const data = response.data[0]
             setMySurveys(data)
@@ -29,12 +29,26 @@ export default function MySurveys({currUser}) {
     }, [])
     
     return (
-        <div className="MySurveys">My Surveys
-            <div className="DisplaySurveys">
-           <text>{mySurveys.name}</text>
-              
+        <div>
+            <div className="create">
+            <h2>My Surveys</h2>
+            <table>
+                <tr>
+                    <th>Survey Name</th>
+                    <th>Description</th>
+                    <th>Creation Date</th> 
+                    <th>Expire Date</th>
+                </tr>
+
+                <tr>
+                    <td>{mySurveys.name}</td>
+                    <td>{mySurveys.survey_desc}</td>
+                    <td>{mySurveys.creation_date}</td>
+                    <td>{mySurveys.end_date}</td>
+                </tr>
+            </table>
             </div>
         </div>
     )
-   
 }
+
