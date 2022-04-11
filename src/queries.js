@@ -67,28 +67,22 @@ app.post('/login', async (req, res) => {
 
 //create a survey
 app.post("/api/insertSurvey", (req, res) => {
-  const uid = req.body.uid;
+  const user = req.body.user;
   const title = req.body.title;
-  const desc = req.body.description;
-  const expire = req.body.expire;
+  const desc = req.body.desc;
+  const expire = req.body.end;
 
-  db.query("INSERT INTO Survey(User_ID, name, survey_desc, creation_date, end_date) values(?, ?, ?, NOW(), ?", 
-  [uid, title, desc, expire], 
-  (err, result) => {
-    if(err) {
-      console.log(err)
-    } else {
-      res.sendStatus("Survey created");
-    }
-  }); 
-});
+  var query = ('INSERT INTO Survey(username, name, survey_desc, creation_date, end_date) VALUES('+'"'+user+'",'+'"'+title+'",'+'"'+desc+'",'+"NOW(),"+"'"+expire+"')")
+  connection.invokeQuery(query, function(rows) {
+    console.log(rows)
+    res.send(rows)
+  }) 
+})
 
 //get all surveys for user
 app.post('/api/getUserSurveys', async (req, res) => {
   var username = req.body.user
-  //console.log(username)
-//var user = 1;
-  var sqlStatement = ('SELECT * from Survey WHERE username = ' + '"' + username + '"' )
+  var sqlStatement = ('SELECT * from Survey WHERE username = ' + '"' + username + '"')
   //console.log(sqlStatement)
    connection.invokeQuery(sqlStatement, function(rows) {
     console.log(rows)
