@@ -45,10 +45,10 @@ app.post('/login', async (req, res) => {
  
   var username = req.body.username;
   var password = req.body.password;
-  //console.log(username)
+  console.log(username)
   var concat = ['\''+username+'\''].join('\',\'');
   var sqlStatement = ('SELECT * FROM Login WHERE username ='+concat+';')
-  //console.log(sqlStatement)
+  console.log(sqlStatement)
   
  const user = await connection.invokeQuery(sqlStatement, async function(rows){
  // console.log(rows[0])
@@ -83,30 +83,18 @@ app.post("/api/insertSurvey", (req, res) => {
   }); 
 });
 
-//get all surveys
-
-app.get("/api/getAllSurvey", (req, res) => {
-  var username = req.body.user;
+//get all surveys for user
+app.post('/api/getUserSurveys', async (req, res) => {
+  var username = req.body.user
+  //console.log(username)
 //var user = 1;
-  var sqlStatement = ('SELECT * from Survey WHERE User_ID ='+user)
+  var sqlStatement = ('SELECT * from Survey WHERE username = ' + '"' + username + '"' )
+  //console.log(sqlStatement)
    connection.invokeQuery(sqlStatement, function(rows) {
     console.log(rows)
     res.send(rows)
-  })
+    })
   }) 
-
-
-//get a specific survey
-app.get("/api/getSurveyID/:id", (req, res) => {
-  const id = req.body.id;
-
-  query("SELECT * FROM Survey WHERE Survey_ID = ?", id, (err, result) => {
-    if(err) {
-      console.log(err)
-    }
-    res.send(result)
-  }); 
-});
 
 //update a survey
 app.put('/api/updateSurvey/:id',(req,res) => {

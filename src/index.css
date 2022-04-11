@@ -130,3 +130,8 @@ code {
   border: 0px  #ffffff;
   text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
 }
+
+table, th, td {
+  text-align: center;
+  border:1px solid black;
+}
