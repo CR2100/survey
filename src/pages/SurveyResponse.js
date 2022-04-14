@@ -18,7 +18,7 @@ export default function SurveyResponse() {
             const data = response.data[0];
             console.log(data);
         })
-    }, [])
+    }, []);
 
     return (
         <div>Response</div>
