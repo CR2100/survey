@@ -104,7 +104,12 @@ export default function LoginPage() {
                 setPasswordReg(e.target.value)
                 }}
             />
-            <button onClick= {register}>Register</button>
+            <button class="pushable " onClick= {register}>
+            <span class="front bigButton">
+                Register 
+                </span>
+                </button>
+                
         </div>
         <div className="create">
             <h2>Login</h2>
@@ -118,7 +123,11 @@ export default function LoginPage() {
                 setPasswordLog(e.target.value)
                 }}
             />
-            <button onClick={login}>Login</button>
+            <button class="pushable" onClick={login}>
+            <span class="front bigButton">
+                Login
+                </span>
+            </button>
         </div>
         </div>
     )
