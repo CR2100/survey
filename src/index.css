@@ -1,4 +1,10 @@
 body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background: -webkit-linear-gradient(left, #25c481, #25b7c4);
   background: linear-gradient(to right, #25c481, #25b7c4);
   font-family: Verdana;
@@ -6,12 +12,10 @@ body {
 section{
   margin: 40px;
 }
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;  
 }
-
 .create {
   max-width: 400px;
   margin: 0 auto;
@@ -67,7 +71,6 @@ code {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
- 
  .pushable {
    margin-top: 5px;
   background: hsl(160deg 100% 32%);
@@ -106,7 +109,6 @@ code {
   outline: none;
 }
 .pushable:hover {
-  
   transition: filter 250ms;
   filter: brightness(107%);
   transition: 0.1s;
@@ -145,7 +147,6 @@ code {
   display: inline-block;
   justify-content:center;
 }
- 
 .error{
   display: block;
   background-color: red;
@@ -155,7 +156,6 @@ code {
   padding: 5px;
   text-align: center;
 }
- 
 .success{
   display: block;
   border-radius: 30px;
@@ -212,8 +212,7 @@ th {
   font-weight: 500;
   font-size: 12px;
   color: rgb(255, 255, 255);
-  text-transform: uppercase;
-  
+  text-transform: uppercase;  
 }
 td {
   overflow: scroll;
