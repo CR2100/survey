@@ -90,6 +90,16 @@ app.post('/api/getUserSurveys', async (req, res) => {
     })
   }) 
 
+app.post('/api/getSurveyInfo', async(req, res) => {
+  var username = req.body.user;
+  var thisSurvey = req.body.survID;
+  var sqlStatement = ('SELECT Survey.name, Questions.Question_ID, Questions.question_desc FROM Survey natural join Questions WHERE Survey.Survey_ID = 1 AND Survey.username = "lknicho1"')
+  connection.invokeQuery(sqlStatement, function(rows) {
+    console.log(rows);
+    res.send(rows);
+  })
+})
+
 //update a survey
 app.put('/api/updateSurvey/:id',(req,res) => {
   const id = req.param.id;
