@@ -71,12 +71,32 @@ app.post("/api/insertSurvey", (req, res) => {
   const title = req.body.title;
   const desc = req.body.desc;
   const expire = req.body.end;
+  const link = req.body.link;
 
-  var query = ('INSERT INTO Survey(username, name, survey_desc, creation_date, end_date) VALUES('+'"'+user+'",'+'"'+title+'",'+'"'+desc+'",'+"NOW(),"+"'"+expire+"')")
+
+  var query = ('INSERT INTO Survey(username, name, survey_desc, creation_date, end_date, link) VALUES('+'"'+user+'",'+'"'+title+'",'+'"'+desc+'",'+"NOW(),"+"'"+expire+"'," +'"'+link+'"'+");" )
   connection.invokeQuery(query, function(rows) {
     console.log(rows)
     res.send(rows)
   }) 
+})
+
+app.post("/api/getLastSurvey", (req, res) => {
+  var query = 'SELECT Survey_ID FROM Survey WHERE Survey_ID = (SELECT max(Survey_ID) FROM Survey)'
+  connection.invokeQuery(query, function(rows) {
+    console.log(rows)
+    res.send(rows)
+  })
+})
+
+app.post("/api/getQType", (req, res) => {
+  type = req.body.type
+  var query = ('SELECT Type_ID FROM Question_Types WHERE Type_Name ='+'"'+type+'";')
+  console.log(query)
+  connection.invokeQuery(query, function(rows) {
+    console.log(rows)
+    res.send(rows)
+  })
 })
 
 //get all surveys for user
@@ -119,17 +139,17 @@ app.delete('/api/deleteSurvey/:id',(req,res) => {
 });
 
 //add a survey question
-app.post("/api/insertQuestion/:id", (req, res) => {
-  const id = req.params.id;
-  // const type;
-  // const question;
+app.post("/api/insertQuestion", (req, res) => {
+  const id = req.body.id;
+  const survey = req.body.survey;
+  const type = req.body.type;
+  const desc = req.body.desc;
 
-  query("INSERT INTO Questions(Survey_ID, Type_ID, question_desc) VALUES(?, ?, ?)", [id, type, question], (err, result) => {
-    if(err) {
-      console.log(err)
-    }
-    res.send(result)
-  }); 
+  var query = ('INSERT INTO Questions(Question_Id, Survey_ID, Type_ID, question_desc) VALUES('+id+','+survey+','+type+','+'"'+desc+'");')
+  connection.invokeQuery(query, function(rows) {
+    console.log(rows)
+    res.send(rows)
+  }) 
 });
 
 //update a question
