@@ -11,8 +11,8 @@ export default function SurveyResponse() {
     useEffect(() => {
         var username = localStorage.getItem("currUser");
         axios.post("http://localhost:3001/api/getSurveyInfo", {
-            user: "lknicho1",
-            surveyId: 1
+            user: "lkn56",
+            surveyId: 4
         }).then(function(response) {
             console.log(response);
             const data = response.data[0];
