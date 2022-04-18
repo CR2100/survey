@@ -143,8 +143,11 @@ export default function CreateSurvey() {
         <div className="create">
             <h2>Create new survey</h2>
             <p>{ title }</p>
-            <button className="button add" type="button" onClick={() => addFormFields()}>Add Question</button>
-            <button onClick={insertSurvey}>Submit</button>
+            <button className="pushable" type="button" onClick={() => addFormFields()}>
+              <span class="front bigButton">
+               Add Question
+              </span>
+            </button>
             <form>
                 <label>Survey Title:</label>
                 <input
@@ -179,10 +182,10 @@ export default function CreateSurvey() {
                 
                 <label>{"Question " + (index+1) }</label>
                 <input type="text" name="question" value={element.question || ""} onChange={e => handleChange(index, e)} />
-                <button className="button add" type="button" onClick={() => addResponseFields(index)}>Add Option</button>
+                <button  type="button" onClick={() => addResponseFields(index)}>Add Option</button>
                 {
                   index ? 
-                    <button type="button"  className="button remove" onClick={() => removeFormFields(index)}>Remove</button> 
+                    <button type="button"   onClick={() => removeFormFields(index)}>Remove</button> 
                     :null
                 }
                 {responseValues.map((element, index) => (
@@ -191,13 +194,20 @@ export default function CreateSurvey() {
                     <input type="text" name="response" value={element.response || ""} onChange={e => handleChange2(index, e)} />
                     {
                       index ? 
-                        <button type="button"  className="button remove" onClick={() => removeResponseFields(index)}>Remove</button> 
+                        <button type="button"  onClick={() => removeResponseFields(index)}>Remove</button> 
                       : null
                     }
                   </div>
-                ))}                
+                ))}       
+                         
               </div>
+              
             ))} 
+             <button className="pushable" onClick={insertSurvey}>
+            <span class="front bigButton">
+            Submit
+            </span>
+            </button>
         </form>
     )
 }
