@@ -14,7 +14,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.get('/beans', function (req, res){
   const sqlStatement = "INSERT INTO Login (username, password) VALUES ('ididit', 'right');"
-  connection.invokeQuery(sqlStatement, function(rows){
+  connection.invokeQuery(sqlStatement, [username, password], function(rows){
     console.log(rows)
   })
 })
@@ -27,8 +27,9 @@ app.post("/register", async(req, res) => {
   const hash = await bcrypt.hash(password, saltRounds);
   //console.log(bcrypt.compareSync('fred', 10$8bASfVFjsISMkf7LoprtUe4EQ8YaX7OnVojYbIiUDOCUCV8CU8BCy)) // true)
   
-    var sqlStatement = ('INSERT IGNORE INTO Login (username, password) VALUES (\''+username+'\',\''+hash+'\');')
-   await connection.invokeQuery(sqlStatement, function(rows){
+  //var sqlStatement = ('INSERT IGNORE INTO Login (username, password) VALUES (\''+username+'\',\''+hash+'\');')
+  var sqlStatement = 'INSERT IGNORE INTO Login (username, password) VALUES (?, ?)'
+   await connection.invokeQuery(sqlStatement, [username, hash], function(rows){
     console.log(rows.warningStatus) 
     if(rows.warningStatus === 1){
       res.status(201).json("user already exists")
@@ -45,24 +46,22 @@ app.post('/login', async (req, res) => {
  
   var username = req.body.username;
   var password = req.body.password;
-  console.log(username)
-  var concat = ['\''+username+'\''].join('\',\'');
-  var sqlStatement = ('SELECT * FROM Login WHERE username ='+concat+';')
-  console.log(sqlStatement)
+  // var concat = ['\''+username+'\''].join('\',\'');
+  // var sqlStatement = ('SELECT * FROM Login WHERE username ='+concat+';')
+  var sqlStatement = ('SELECT * FROM Login WHERE username = ?')
   
- const user = await connection.invokeQuery(sqlStatement, async function(rows){
- // console.log(rows[0])
-  if(rows[0] !== undefined){
-    const validPass = await bcrypt.compare(password, rows[0].password);
-    if (validPass){
-      res.status(200).json('valid username and password')
-    } else{
-      res.status(201).json('wrong password')
-    }
-  } else{
-    res.status(202).json('User not found')
-  }
-  });
+ const user = connection.invokeQuery(sqlStatement, [username], async function (rows) {
+   if (rows[0] !== undefined) {
+     const validPass = await bcrypt.compare(password, rows[0].password);
+     if (validPass) {
+       res.status(200).json('valid username and password');
+     } else {
+       res.status(201).json('wrong password');
+     }
+   } else {
+     res.status(202).json('User not found');
+   }
+ });
 });
 
 //create a survey
@@ -73,9 +72,9 @@ app.post("/api/insertSurvey", (req, res) => {
   const expire = req.body.end;
   const link = req.body.link;
 
-
-  var query = ('INSERT INTO Survey(username, name, survey_desc, creation_date, end_date, link) VALUES('+'"'+user+'",'+'"'+title+'",'+'"'+desc+'",'+"NOW(),"+"'"+expire+"'," +'"'+link+'"'+");" )
-  connection.invokeQuery(query, function(rows) {
+  // var query = ('INSERT INTO Survey(username, name, survey_desc, creation_date, end_date, link) VALUES('+'"'+user+'",'+'"'+title+'",'+'"'+desc+'",'+"NOW(),"+"'"+expire+"'," +'"'+link+'"'+");" )
+  var query = 'INSERT INTO Survey(username, name, survey_desc, creation_date, end_date, link) VALUES(?, ?, ?, NOW(), ?, ?)'
+  connection.invokeQuery(query, [user, title, desc, expire, link], function(rows) {
     console.log(rows)
     res.send(rows)
   }) 
@@ -83,7 +82,7 @@ app.post("/api/insertSurvey", (req, res) => {
 
 app.post("/api/getLastSurvey", (req, res) => {
   var query = 'SELECT Survey_ID FROM Survey WHERE Survey_ID = (SELECT max(Survey_ID) FROM Survey)'
-  connection.invokeQuery(query, function(rows) {
+  connection.invokeQuery(query, [], function(rows) {
     console.log(rows)
     res.send(rows)
   })
@@ -91,9 +90,10 @@ app.post("/api/getLastSurvey", (req, res) => {
 
 app.post("/api/getQType", (req, res) => {
   type = req.body.type
-  var query = ('SELECT Type_ID FROM Question_Types WHERE Type_Name ='+'"'+type+'";')
+  // var query = ('SELECT Type_ID FROM Question_Types WHERE Type_Name ='+'"'+type+'";')
+  var query = 'SELECT Type_ID FROM Question_Types WHERE Type_Name = ?'
   console.log(query)
-  connection.invokeQuery(query, function(rows) {
+  connection.invokeQuery(query, [type], function(rows) {
     console.log(rows)
     res.send(rows)
   })
@@ -102,9 +102,10 @@ app.post("/api/getQType", (req, res) => {
 //get all surveys for user
 app.post('/api/getUserSurveys', async (req, res) => {
   var username = req.body.user
-  var sqlStatement = ('SELECT * from Survey WHERE username = ' + '"' + username + '"')
+  // var sqlStatement = ('SELECT * from Survey WHERE username = ' + '"' + username + '"')
+  var sqlStatement = ("SELECT * from Survey WHERE username = ?")
   //console.log(sqlStatement)
-   connection.invokeQuery(sqlStatement, function(rows) {
+   connection.invokeQuery(sqlStatement, [username], function(rows) {
     console.log(rows)
     res.send(rows)
     })
@@ -145,8 +146,9 @@ app.post("/api/insertQuestion", (req, res) => {
   const type = req.body.type;
   const desc = req.body.desc;
 
-  var query = ('INSERT INTO Questions(Question_Id, Survey_ID, Type_ID, question_desc) VALUES('+id+','+survey+','+type+','+'"'+desc+'");')
-  connection.invokeQuery(query, function(rows) {
+  //var query = ('INSERT INTO Questions(Question_Id, Survey_ID, Type_ID, question_desc) VALUES('+id+','+survey+','+type+','+'"'+desc+'");')
+  var query = 'INSERT INTO Questions(Question_Id, Survey_ID, Type_ID, question_desc) VALUES(?, ?, ?, ?)'
+  connection.invokeQuery(query, [id, survey, type, desc] ,function(rows) {
     console.log(rows)
     res.send(rows)
   }) 

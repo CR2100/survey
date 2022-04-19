@@ -23,7 +23,7 @@ const forwardConfig = {
     dstPort: dbServer.port
 };
 
-connection.invokeQuery = function(sqlQuery, data){
+connection.invokeQuery = function(sqlQuery, [...variables], data){
 var sshClient = new Client();
 const SSHConnection = new Promise((resolve, reject) => {
   
@@ -47,7 +47,8 @@ const SSHConnection = new Promise((resolve, reject) => {
             }
             resolve(db);
             });
-            db.query(sqlQuery, function (err, rows) {
+            db.query(sqlQuery, variables, function (err, rows) {
+
                 if(rows){
                 }
                           if (err) 
