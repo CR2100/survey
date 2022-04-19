@@ -7,7 +7,6 @@ export default function CreateSurvey() {
     const [description, setDesc] = useState('');
     const [expire, setDate] = useState('');
     const [formValues, setFormValues] = useState([{ question: ""}])
-    //const [responseValues, setResponseValues] = useState([{qid: 0},{ response: ""}])
     const [responseValues, setResponseValues] = useState([{ response: ""}])
     const [count, setCount] = useState(0)
     const [type, setType] = useState(0)
@@ -28,6 +27,25 @@ export default function CreateSurvey() {
       getData()
     }, [])
 
+    //get the 
+    const getType = async () => {
+      try {
+        await axios.post("http://localhost:3001/api/getQType", {
+          //send value selected from dropdown
+          type: "multiple choice" //this is a placeholder until type can be selected on front-end
+        }).then(function(response) {
+            setType(response.data[0].Type_ID)
+        })
+      }
+      catch (e) {
+        console.log(e)
+      }
+    }
+
+    useEffect(() => {
+      getType()
+    }, [])
+
     const insertSurvey = () => {
       setCount(count+1)
       //insert a new survey
@@ -42,33 +60,8 @@ export default function CreateSurvey() {
           link: link
        }).then(function (response) {
           insertQuestions()
-          if(response.status === 200){
-            swal("Survey successfully created!");
-        }
-        if(response.status === 201){
-            swal("Error!");
-        }
         })
   };
-
-  //complete get question type method
-  const getType = async () => {
-    try {
-      await axios.post("http://localhost:3001/api/getQType", {
-        //send value selected from dropdown
-        type: "multiple choice"
-      }).then(function(response) {
-          setType(response.data[0].Type_ID)
-      })
-    }
-    catch (e) {
-      console.log(e)
-    }
-  }
-
-  useEffect(() => {
-    getType()
-  }, [])
 
   //complete insert questions method
   const insertQuestions = () => {
@@ -82,7 +75,12 @@ export default function CreateSurvey() {
         type: type,
         desc: element.question
       }).then(function(response) {
-        console.log(element.question)
+        if(response.status === 200){
+          swal("Survey successfully created!");
+      }
+      if(response.status === 201){
+          swal("Error!");
+      }
       })
     })
   }
