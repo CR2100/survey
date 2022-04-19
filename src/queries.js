@@ -105,7 +105,7 @@ app.post('/api/getUserSurveys', async (req, res) => {
   // var sqlStatement = ('SELECT * from Survey WHERE username = ' + '"' + username + '"')
   var sqlStatement = ("SELECT * from Survey WHERE username = ?")
   //console.log(sqlStatement)
-   connection.invokeQuery(sqlStatement, username, function(rows) {
+   connection.invokeQuery(sqlStatement, [username], function(rows) {
     console.log(rows)
     res.send(rows)
     })
