@@ -5,9 +5,10 @@ import axios from 'axios';
 export default function MySurveys({currUser}) {
 
     // mySurveys will hold an array of surveys returned from the API call to the database
-    const [mySurveys, setMySurveys] = useState({})
+    const [mySurveys, setMySurveys] = useState([])
 
     useEffect(() => {
+        
         // Pass appropriate info into getMySurveys
          function getMySurveys(){
             // Call API to get all surveys for a given user
@@ -17,7 +18,7 @@ export default function MySurveys({currUser}) {
                user: username
          }).then(function (response) {
             console.log(response);
-            const data = response.data[0]
+            const data = response.data
             setMySurveys(data)
           })
             // store them in mySurveys variable
@@ -26,29 +27,51 @@ export default function MySurveys({currUser}) {
           
         }
         getMySurveys();
+        
     }, [])
-    
-    return (
-        <div>
-            <div className="create">
-            <h2>My Surveys</h2>
+        return(
+        <section>
+            <div className="tbl-header">
             <table>
+                <thead>
                 <tr>
                     <th>Survey Name</th>
                     <th>Description</th>
                     <th>Creation Date</th> 
                     <th>Expire Date</th>
+                    <th>Actions</th>
                 </tr>
-
-                <tr>
-                    <td>{mySurveys.name}</td>
-                    <td>{mySurveys.survey_desc}</td>
-                    <td>{mySurveys.creation_date}</td>
-                    <td>{mySurveys.end_date}</td>
+                </thead>
+                </table>
+            </div>
+            <div className="tbl-content">
+            <table>
+               <tbody> {  mySurveys.map((val) =>
+                <tr key = {val}>
+                    <td>{val.name}</td>
+                    <td>{val.survey_desc}</td>
+                    <td>{val.creation_date}</td>
+                    <td>{val.end_date}</td>
+                    <td >
+                        <button  class="pushable " >
+                            <span class="front smallButton" >
+                            Edit
+                            </span>
+                        </button>
+                        <button  class="pushable marginLeft" >
+                            <span class="front smallButton" >
+                            View Responses
+                            </span>
+                        </button>
+                    </td>
                 </tr>
+                    )
+                }               
+                </tbody>
             </table>
             </div>
-        </div>
-    )
+        </section>
+        )
+   
 }
 
