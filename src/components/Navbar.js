@@ -14,6 +14,9 @@ export default function Navbar() {
                 <Link to="/mySurveys">My Surveys</Link>
                 <Link to="/stats">Stats</Link>
                 <Link to="/loginPage">Login/Sign up</Link>
+                <button onClick={() => {
+                    localStorage.clear();
+                }}>Logout</button>
             
             
         </div>
