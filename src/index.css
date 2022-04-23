@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -9,12 +9,12 @@ body {
   background: linear-gradient(to right, #25c481, #25b7c4);
   font-family: Verdana;
 }
-section{
+section {
   margin: 40px;
 }
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;  
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 .create {
   max-width: 400px;
@@ -27,9 +27,9 @@ code {
   width: 100%;
   padding-top: 1px;
   padding-bottom: 1px;
-   font-weight: 500;
-   font-size: 14px;
-   color: rgb(255, 255, 255);
+  font-weight: 500;
+  font-size: 14px;
+  color: rgb(255, 255, 255);
 }
 .create h2 {
   padding-top: 15px;
@@ -40,16 +40,18 @@ code {
   text-align: center;
   margin-bottom: 15px;
 }
-.create input, .create textarea, .create select {
+.create input,
+.create textarea,
+.create select {
   width: 100%;
- padding: 10px 10px;
- margin-bottom: 5px;
+  padding: 10px 10px;
+  margin-bottom: 5px;
   text-align: left;
   font-weight: 500;
   font-size: 14px;
   color: rgb(255, 255, 255);
 
-  background-color: rgba(255,255,255,0.3);
+  background-color: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
   cursor: pointer;
   border: 1px solid #ddd;
@@ -57,22 +59,24 @@ code {
   display: block;
   transition: 0.1s;
 }
-  input:focus {
-    text-shadow: 1px 1px 1px black;
-  outline:none;
-  background-color: rgba(255,255,255,0.5);
+.child {
+  display: inline-flex;
+}
+input:focus {
+  text-shadow: 1px 1px 1px black;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.5);
   border: 1px solid rgb(0, 255, 200);
   transition-duration: 200ms;
   transform: translateY(-5px);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  input:hover {
-   
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
- .pushable {
-   margin-top: 5px;
+}
+input:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.pushable {
+  margin-top: 5px;
   background: hsl(160deg 100% 32%);
   border: none;
   border-radius: 8px;
@@ -80,14 +84,14 @@ code {
   cursor: pointer;
   transition: 0.1s;
 }
-.marginLeft{
+.marginLeft {
   margin-left: 10px;
 }
 .smallButton {
   font-size: 13px;
   padding: 5px 5px;
 }
-.bigButton{
+.bigButton {
   font-size: 16px;
   padding: 8px 24px;
 }
@@ -102,7 +106,7 @@ code {
 
 .pushable:active .front {
   transform: translateY(-2px);
-  outline:none;
+  outline: none;
 }
 
 .pushable:focus:not(:focus-visible) {
@@ -116,7 +120,7 @@ code {
 }
 .navbar {
   padding-top: 20px;
-  width:100%;
+  width: 100%;
   table-layout: fixed;
 }
 .navbar h1 {
@@ -124,7 +128,7 @@ code {
   background: linear-gradient(-135deg, #c850c0, #4158d0);
 }
 .navbar .links {
-  margin-left: auto; 
+  margin-left: auto;
   background: linear-gradient(-135deg, #c850c0, #4158d0);
 }
 .navbar a {
@@ -134,20 +138,20 @@ code {
   font-size: 15px;
   color: rgb(255, 255, 255);
   text-transform: uppercase;
-  background-color: rgba(255,255,255,0.3);
+  background-color: rgba(255, 255, 255, 0.3);
 }
-.navbar a:hover  {
-  background-color: rgba(255,255,255,0.23);
-  color:rgb(219, 236, 240);
+.navbar a:hover {
+  background-color: rgba(255, 255, 255, 0.23);
+  color: rgb(219, 236, 240);
 }
-.navbar a:link { 
-  text-decoration: none; 
+.navbar a:link {
+  text-decoration: none;
 }
-.messages{
+.messages {
   display: inline-block;
-  justify-content:center;
+  justify-content: center;
 }
-.error{
+.error {
   display: block;
   background-color: red;
   color: white;
@@ -156,19 +160,19 @@ code {
   padding: 5px;
   text-align: center;
 }
-.success{
+.success {
   display: block;
   border-radius: 30px;
   border: 2px solid darkorange;
-  background-position:center;
-  background-color:rgb(255, 248, 230)  ;
+  background-position: center;
+  background-color: rgb(255, 248, 230);
   color: darkorange;
   width: fit-content;
   height: fit-content;
   text-align: top;
 }
-.success h1{
-  font-family:Arial, Helvetica, sans-serif;
+.success h1 {
+  font-family: Arial, Helvetica, sans-serif;
   text-align: center;
   color: darkorange;
   font-size: larger;
@@ -180,13 +184,12 @@ code {
   border-radius: 8px;
   background-color: rgb(27, 236, 219);
   font-size: 12px;
-  border: 0px  #ffffff;
-  outline:none;
+  border: 0px #ffffff;
+  outline: none;
   text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
   transition: 0.1s;
 }
 .swal-button:hover {
-
   transition: 0.1s;
   transform: translateY(-2px);
 }
@@ -194,17 +197,17 @@ code {
   background-color: rgba(43, 165, 137, 0.45);
 }
 table {
-  width:100%;
+  width: 100%;
   table-layout: fixed;
 }
-.tbl-header{
-  background-color: rgba(255,255,255,0.3);
- }
-.tbl-content{
-  height:300px;
-  overflow-x:auto;
+.tbl-header {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.tbl-content {
+  height: 300px;
+  overflow-x: auto;
   margin-top: 0px;
-  border: 1px solid rgba(255,255,255,0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 th {
   padding: 20px 15px;
@@ -212,7 +215,7 @@ th {
   font-weight: 500;
   font-size: 12px;
   color: rgb(255, 255, 255);
-  text-transform: uppercase;  
+  text-transform: uppercase;
 }
 td {
   overflow: scroll;
@@ -220,11 +223,11 @@ td {
   white-space: nowrap;
   padding: 15px;
   text-align: left;
-  vertical-align:middle;
+  vertical-align: middle;
   font-weight: 300;
   font-size: 12px;
   color: rgb(255, 255, 255);
-  border-bottom: solid 1px rgba(255,255,255,0.1);
+  border-bottom: solid 1px rgba(255, 255, 255, 0.1);
 }
 td:hover {
   overflow: visible;
