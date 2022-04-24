@@ -14,6 +14,10 @@ export default function Intro() {
   // }
 
   const login = () => {
+    if(usernameLog.length == 0 || passwordLog.length == 0){
+      swal("Login Unuccessful :(", "Username/Password cannot be blank", "warning");
+    }
+    else{
     axios
       .post(
         "http://localhost:3001/login",
@@ -50,6 +54,7 @@ export default function Intro() {
           this.errorStatus = error.response.data.message;
         }
       });
+    }
   };
 
   return (
