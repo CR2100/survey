@@ -126,11 +126,21 @@ app.post("/api/getUserSurveys", async (req, res) => {
   });
 });
 
-app.post('/api/getSurveyInfo', async(req, res) => {
-  var username = req.body.user;
-  var thisSurvey = req.body.survID;
-  var sqlStatement = ('SELECT Survey.name, Questions.Question_ID, Questions.question_desc FROM Survey natural join Questions WHERE Survey.Survey_ID = 4')
-  connection.invokeQuery(sqlStatement, function(rows) {
+//getting survey title and desc
+app.post("/api/getSurveyIntro", async(req, res) => {
+  var thisSurvey = req.body.surveyId;
+  var sqlStatement = ("SELECT Survey.name, Survey.survey_desc FROM Survey WHERE Survey.Survey_ID = ?");
+  connection.invokeQuery(sqlStatement, [thisSurvey], function(rows) {
+    console.log(rows);
+    res.send(rows);
+  })
+})
+
+app.post('/api/getSurveyQuestions', async(req, res) => {
+  var thisSurvey = req.body.surveyId;
+  var sqlStatement = ('SELECT Questions.Question_ID, Questions.question_desc, GROUP_CONCAT(Response_Options.option) AS Options FROM Questions NATURAL JOIN Response_Options WHERE Questions.Survey_ID = ? GROUP BY Questions.Question_ID')
+  connection.invokeQuery(sqlStatement, [thisSurvey], function(rows) {
+    console.log(rows);
     res.send(rows);
   })
 })
