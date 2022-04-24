@@ -26,6 +26,10 @@ export default function SignUpPage() {
 
   const register = () => {
     console.log(usernameReg, passwordReg);
+    if(usernameReg.length == 0 || passwordReg.length == 0){
+      swal("Register Unuccessful :(", "Username/Password cannot be blank", "warning");
+    }
+    else{
     axios
       .post(
         "http://localhost:3001/register",
@@ -64,6 +68,7 @@ export default function SignUpPage() {
           this.errorStatus = error.response.data.message;
         }
       });
+    }
   };
 
   return (
