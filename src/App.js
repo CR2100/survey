@@ -9,6 +9,7 @@ import MySurveys from "./pages/MySurveys";
 import Stats from "./pages/Stats";
 import Navbar from "./components/Navbar";
 import LoginPage from "./pages/LoginPage";
+import SignUp from "./pages/SignUp";
 function App() {
   const [currUser, setCurrUser] = useState({});
   return (
@@ -26,6 +27,7 @@ function App() {
           />
           <Route path="/stats" element={<Stats />} />
           <Route path="/loginPage" element={<LoginPage />} />
+          <Route path="/SignUp" element={<SignUp/>} />
         </Routes>
       </Router>
     </div>

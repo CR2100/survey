@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import swal from "sweetalert";
-export default function LoginPage() {
+export default function SignUpPage() {
   const [usernameReg, setUsernameReg] = useState("");
   const [passwordReg, setPasswordReg] = useState("");
-  const [usernameLog, setUsernameLog] = useState("");
-  const [passwordLog, setPasswordLog] = useState("");
+  const [emailReg, setEmailReg] = useState(""); 
   const [submitted, setSubmitted] = useState(false);
   const successReg = () => {
     return (
@@ -33,6 +32,7 @@ export default function LoginPage() {
         {
           username: usernameReg,
           password: passwordReg,
+        //   email: emailReg
         },
         {}
       )
@@ -46,6 +46,7 @@ export default function LoginPage() {
             "Welcome " + usernameReg + "!",
             "success"
           );
+          window.location.href = '/'
         }
         if (response.status === 201) {
           swal(
@@ -64,46 +65,9 @@ export default function LoginPage() {
         }
       });
   };
-  const login = () => {
-    axios
-      .post(
-        "http://localhost:3001/login",
-        {
-          username: usernameLog,
-          password: passwordLog,
-        },
-        {}
-      )
-      .then((response) => {
-        console.log(response);
-        if (response.status === 200) {
-          //setSubmitted(true);
-          swal(
-            "Login Successful!",
-            "Welcome back " + usernameLog + "!",
-            "success"
-          );
-          localStorage.setItem("currUser", usernameLog);
-        }
-        if (response.status === 201) {
-          swal("Login Unuccessful :(", "Incorrect password!", "error");
-        }
-        if (response.status === 202) {
-          swal("Login Unuccessful :(", "User does not exist", "warning");
-        }
-      })
-      .catch((error) => {
-        if (!error.response) {
-          // network error
-          this.errorStatus = "Error: Network Error";
-        } else {
-          this.errorStatus = error.response.data.message;
-        }
-      });
-  };
+
   return (
     <form onSubmit = {handleSubmit}>
-    <div>
       {/* Calling to the methods */}
       <div className="messages">{successReg()}</div>
       <div className="create">
@@ -124,31 +88,17 @@ export default function LoginPage() {
             setPasswordReg(e.target.value);
           }}
         />
+        <input id = "email"
+            type="text"
+            placeholder="email..."
+            onChange={(e) => {
+                setEmailReg(e.target.value);
+            }}
+        />
         <button class="pushable " onClick={register}>
           <span class="front bigButton">Register</span>
         </button>
       </div>
-      <div className="create">
-        <h2>Login</h2>
-        <input
-          type="text"
-          placeholder="Username..."
-          onChange={(e) => {
-            setUsernameLog(e.target.value);
-          }}
-        />
-        <input
-          type="password"
-          placeholder="Password..."
-          onChange={(e) => {
-            setPasswordLog(e.target.value);
-          }}
-        />
-        <button class="pushable" onClick={login}>
-          <span class="front bigButton">Login</span>
-        </button>
-      </div>
-    </div>
-    </form>
+      </form>
   );
 }

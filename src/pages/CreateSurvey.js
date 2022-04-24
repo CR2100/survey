@@ -187,13 +187,14 @@ export default function CreateSurvey() {
     setMatrix(myArray);
   };
 
-  // let removeResponseFields = (i,j) => {
-  //   let myArray = [...matrix];
-  //   if(i > 0) {
-  //     myArray[i].splice(j, 1);
-  //     setMatrix(myArray);
-  //   }
-  // }
+  let removeResponseFields = (i,j) => {
+    let myArray = [...matrix];
+    console.log(myArray[i].length)
+    if(myArray[i].length > 2) {
+      myArray[i].splice(j, 1)
+      setMatrix(myArray);
+    }
+  }
 
   let handleSubmit = (event) => {
     event.preventDefault();
@@ -205,7 +206,6 @@ export default function CreateSurvey() {
     <form onSubmit={handleSubmit}>
       <div className="create">
         <h2>Create new survey</h2>
-        <p>{title}</p>
         <form>
           <label>Survey Title:</label>
           <input
@@ -285,22 +285,37 @@ export default function CreateSurvey() {
                         <input
                           type="text"
                           onChange={(e) =>
-                            handleChangeMatrix(rowIndex, columnIndex, e)
+                          handleChangeMatrix(rowIndex, columnIndex, e)
                           }
                         />
+                          {(() => {
+                            if (columnIndex > 0) {
+                              return (
+                                <button
+                                  className = "pushable"
+                                  type = "button"
+                                  onClick={() =>
+                                  removeResponseFields(rowIndex, columnIndex)}
+                                >
+                                  <span class="front smallButton">X</span>
+                                </button>
+                              )
+                            } else{
+                                return(
+                                  <button 
+                                    className = "pushable"
+                                    type="button"
+                                    onClick={() =>
+                                      removeFormFields(rowIndex)
+                                    }
+                                  >
+                                  <span class="front smallButton">X</span> 
+                              </button> 
+                            )
+                            }
+                          })()}
                       </td>
                     ))}
-                    <td>
-                      <button 
-                        className = "pushable"
-                        type="button"
-                        onClick={() =>
-                          removeFormFields(rowIndex)
-                        }
-                      >
-                        <span class="front smallButton">Remove</span> 
-                      </button>
-                    </td>
                   </tr>                
                 ))}
               </tbody>
@@ -343,16 +358,31 @@ export default function CreateSurvey() {
                 <tbody>
                   {matrix.map((row, rowIndex) => (
                     <tr key={rowIndex}>
-                      {row.map((column, columnIndex) => (
-                        <td key={columnIndex}>
+                      <td key={0}>
                           <input
                             type="text"
+                            placeholder="question..."
                             onChange={(e) =>
-                              handleChangeMatrix(rowIndex, columnIndex, e)
+                              handleChangeMatrix(rowIndex, 0, e)
                             }
                           />
-                        </td>
-                      ))}
+                      </td>
+                      <td key={2}>
+                      <select class="dropdown" onChange={(e) =>handleChangeMatrix(rowIndex,1,e)}>
+                          <option value="Select...">Select...</option>
+                          <option value="True">True</option>
+                          <option value="Yes">Yes</option>
+                          <option value="1">1</option>
+                        </select>
+                      </td>
+                      <td key={3}>
+                      <select class="dropdown" onChange={(e) => handleChangeMatrix(rowIndex,2,e)}>
+                          <option value="Select...">Select...</option>
+                          <option value="False">False</option>
+                          <option value="No">No</option>
+                          <option value="0">0</option>
+                        </select>
+                      </td>
                       <td>
                         <button 
                           className = "pushable"
