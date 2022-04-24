@@ -22,7 +22,7 @@ export default function Navbar() {
       <Link to="/mySurveys">My Surveys</Link>
       <Link to="/stats">Stats</Link>
       {isLoggedIn ? (
-        <a onClick={logout}>Log Out</a>
+        <a onClick={logout}>{"Log Out"}</a>
       ) : (
       <h1></h1>
       )}
