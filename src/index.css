@@ -146,6 +146,7 @@ input:hover {
 .navbar a:hover {
   background-color: rgba(255, 255, 255, 0.23);
   color: rgb(219, 236, 240);
+  cursor: pointer;
 }
 .navbar a:link {
   text-decoration: none;
