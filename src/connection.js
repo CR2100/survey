@@ -48,9 +48,15 @@ connection.invokeQuery = function (sqlQuery, [...variables], data) {
             });
             db.query(sqlQuery, variables, function (err, rows) {
               if (rows) {
+                db.end()
               }
-              if (err) throw err;
-              else data(rows);
+              if (err) {
+                throw err;
+              }
+              else {
+                data(rows);
+                db.end();
+              }
             });
           }
         );
