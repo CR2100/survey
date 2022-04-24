@@ -6,6 +6,10 @@ export default function MySurveys({ currUser }) {
   // mySurveys will hold an array of surveys returned from the API call to the database
   const [mySurveys, setMySurveys] = useState([]);
 
+  const reroute = () => {
+    window.location.href = '/createSurvey'
+  }
+
   useEffect(() => {
     // Pass appropriate info into getMySurveys
     function getMySurveys() {
@@ -65,6 +69,11 @@ export default function MySurveys({ currUser }) {
           </tbody>
         </table>
       </div>
+      <div className = "buttonContainer">
+          <button class="pushable MarginLeft">
+            <span class="front bigButton" onClick={reroute}>Create New Survey</span>
+          </button>
+        </div>
     </section>
   );
 }
