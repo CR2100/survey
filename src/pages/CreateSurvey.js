@@ -82,6 +82,10 @@ export default function CreateSurvey() {
     //insert a new survey
     var username = localStorage.getItem("currUser");
     const link = "localhost:3000/SurveyResponse#" + count;
+    if(title.length == 0 || description.length == 0){
+      swal("Survey NOT Created :(", "Survey Title/Description cannot be blank", "warning");
+    }
+    else{
     axios
       .post("http://localhost:3001/api/insertSurvey", {
         user: username,
@@ -100,6 +104,7 @@ export default function CreateSurvey() {
           swal("Error!");
         }
       });
+    }
   };
 
   //complete insert questions method
