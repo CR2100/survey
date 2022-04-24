@@ -76,19 +76,20 @@ app.post("/login", async (req, res) => {
 //create a survey
 app.post("/api/insertSurvey", (req, res) => {
   const user = req.body.user;
+  const type = req.body.type;
   const title = req.body.title;
   const desc = req.body.desc;
   const expire = req.body.end;
   const link = req.body.link;
 
+  console.log(type)
   // var query = ('INSERT INTO Survey(username, name, survey_desc, creation_date, end_date, link) VALUES('+'"'+user+'",'+'"'+title+'",'+'"'+desc+'",'+"NOW(),"+"'"+expire+"'," +'"'+link+'"'+");" )
   var query =
-    "INSERT INTO Survey(username, name, survey_desc, creation_date, end_date, link) VALUES(?, ?, ?, NOW(), ?, ?)";
+    "INSERT INTO Survey(username, Type_ID, name, survey_desc, creation_date, end_date, link) VALUES(?, ?, ?, ?, NOW(), ?, ?)";
   connection.invokeQuery(
     query,
-    [user, title, desc, expire, link],
+    [user, type, title, desc, expire, link],
     function (rows) {
-      console.log(rows);
       res.send(rows);
     }
   );
@@ -103,10 +104,18 @@ app.post("/api/getLastSurvey", (req, res) => {
   });
 });
 
-app.post("/api/getQType", (req, res) => {
+app.post("/api/getTypes", (req, res) => {
+  var query = "SELECT type_name from Survey_Types";
+  connection.invokeQuery(query, [], function(rows) {
+    console.log(rows);
+    res.send(rows);
+  })
+});
+
+app.post("/api/getSType", (req, res) => {
   type = req.body.type;
   // var query = ('SELECT Type_ID FROM Question_Types WHERE Type_Name ='+'"'+type+'";')
-  var query = "SELECT Type_ID FROM Question_Types WHERE Type_Name = ?";
+  var query = "SELECT Type_ID FROM Survey_Types WHERE Type_Name = ?";
   console.log(query);
   connection.invokeQuery(query, [type], function (rows) {
     console.log(rows);
@@ -181,14 +190,12 @@ app.delete("/api/deleteSurvey/:id", (req, res) => {
 app.post("/api/insertQuestion", (req, res) => {
   const id = req.body.id;
   const survey = req.body.survey;
-  const type = req.body.type;
   const desc = req.body.desc;
 
   //var query = ('INSERT INTO Questions(Question_Id, Survey_ID, Type_ID, question_desc) VALUES('+id+','+survey+','+type+','+'"'+desc+'");')
-  var query =
-    "INSERT INTO Questions(Question_Id, Survey_ID, Type_ID, question_desc) VALUES(?, ?, ?, ?)";
-  connection.invokeQuery(query, [id, survey, type, desc], function (rows) {
-    console.log(rows);
+  var query = "INSERT INTO Questions(Question_Id, Survey_ID, question_desc) VALUES(?, ?, ?)";
+  connection.invokeQuery(query, [id, survey, desc], function (rows) {
+    console.log("Questions query results: " + rows);
     res.send(rows);
   });
 });
@@ -225,21 +232,17 @@ app.post("/api/deleteQuestion/:id", (req, res) => {
 });
 
 //insert question response options
-app.post("/api/insertResponseOption/:id", (req, res) => {
-  const qid = req.params.id;
-  // const id;
-  // const option;
+app.post("/api/insertResponseOptions/", (req, res) => {
+  const qid = req.body.qid;
+  const sid = req.body.sid;
+  const option = req.body.option;
 
-  query(
-    "INSERT INTO Response_Options(Question_ID, Survey_ID, option) VALUES(?, ?, ?)",
-    [qid, id, option],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      }
-      res.send(result);
-    }
-  );
+  var query =
+    "INSERT INTO Response_Options(Question_Id, Survey_ID, option) VALUES(?, ?, ?)";
+  connection.invokeQuery(query, [qid, sid, option], function (rows) {
+    console.log(rows);
+    res.send(rows);
+  });
 });
 
 //update question response option
@@ -278,7 +281,6 @@ app.post("/api/deleteResponseOption/:id", (req, res) => {
 });
 
 //insert survey response when a survey is submitted
-
 app.listen(3001, () => {
   console.log("running server");
 });

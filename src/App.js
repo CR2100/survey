@@ -9,7 +9,11 @@ import MySurveys from "./pages/MySurveys";
 import Stats from "./pages/Stats";
 import Navbar from "./components/Navbar";
 import LoginPage from "./pages/LoginPage";
+<<<<<<< HEAD
 import SurveyResponse from "./pages/SurveyResponse";
+=======
+import SignUp from "./pages/SignUp";
+>>>>>>> c9d8efb7dfe9b6dd68cf58ccf6497cb89c37a4bd
 function App() {
   const [currUser, setCurrUser] = useState({});
   const id = "surveyID"
@@ -25,7 +29,11 @@ function App() {
           <Route path="/mySurveys" element={<MySurveys currUser={currUser} />} />
           <Route path="/stats" element={<Stats />} />
           <Route path="/loginPage" element={<LoginPage />} />
+<<<<<<< HEAD
           <Route path={`/SurveyResponse/:${id}`}  element={<SurveyResponse />} />
+=======
+          <Route path="/SignUp" element={<SignUp/>} />
+>>>>>>> c9d8efb7dfe9b6dd68cf58ccf6497cb89c37a4bd
         </Routes>
       </Router>
     </div>
