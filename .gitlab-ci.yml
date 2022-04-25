@@ -19,7 +19,7 @@ build-pages:
 pages:
   stage: deploy
   script:
-  - each "deployed something lol"
+  - echo "deployed something lol"
   artifacts:
     paths:
       - public
