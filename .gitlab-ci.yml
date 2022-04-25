@@ -19,7 +19,7 @@ build-pages:
 pages:
   stage: deploy
   script:
-  
+  - CI=false npm start
   artifacts:
     paths:
       - public
