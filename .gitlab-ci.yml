@@ -4,13 +4,11 @@ cache:
   paths:
     - node_modules/
 
-before_script:
-  - rm -rf build
-  - CI=false npm install
-
-pages:
-  stage: deploy
+build-pages:
+  stage: build
   script:
+    - rm -rf build
+    - CI=false npm install
     - CI=false npm run build
     - rm -rf public
     - cp build/index.html build/404.html
@@ -18,5 +16,13 @@ pages:
   artifacts:
     paths:
       - public
-  only:
-    - master
+pages:
+  stage: deploy
+  script:
+    - CI=false npm run startNode
+    - CI=false npm run start1  
+  artifacts:
+    paths:
+      - public
+  # only:
+  #   - master
