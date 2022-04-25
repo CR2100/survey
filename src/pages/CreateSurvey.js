@@ -9,7 +9,8 @@ export default function CreateSurvey() {
   const [expire, setDate] = useState("");
   const [formValues, setFormValues] = useState([{ question: "" }]);
   //const [responseValues, setResponseValues] = useState([{ response: "" }]);
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
+  // const [deleted, setDeleted] = useState(0);
   const [type, setType] = useState(0);
   const n = 2;
 
@@ -38,7 +39,9 @@ export default function CreateSurvey() {
       await axios
         .post("http://localhost:3001/api/getLastSurvey", {})
         .then(function (response) {
-          setCount(response.data[0].Survey_ID + 1);
+          localStorage.setItem("surveyID", response.data[0].Survey_ID)
+          // setCount(response.data[0].Survey_ID+1);
+          // setDeleted(parseInt(localStorage.getItem("lastSurvey")))
         });
     } catch (e) {
       console.log(e);
@@ -76,14 +79,34 @@ export default function CreateSurvey() {
     getType()
   }, [typeValue])
 
+  const getID = () => {
+    var count = parseInt(localStorage.getItem("surveyID"))
+    var deleted = parseInt(localStorage.getItem("lastSurvey"))
+
+    if(count <= deleted) {
+      localStorage.setItem("surveyID", (deleted+1))
+      localStorage.removeItem("lastSurvey")
+    }
+    else {
+      localStorage.setItem("surveyID", (count+1))
+      localStorage.removeItem("lastSurvey")
+    }
+  }
+
   //insert the survey details - this will be stored in the 'Survey' data table
-  const insertSurvey  = () => {
-    setCount(count + 1);
-    //insert a new survey
+  const insertSurvey  = async() => {
+    getID()
+
+    var count = parseInt(localStorage.getItem("surveyID"));
     var username = localStorage.getItem("currUser");
-    const link = "localhost:3000/SurveyResponse#" + count;
+    const link = "localhost:3000/SurveyResponse/" + count;
+
     if(title.length == 0 || description.length == 0){
+      localStorage.setItem("surveyID", (count-1))
       swal("Survey NOT Created :(", "Survey Title/Description cannot be blank", "warning");
+    } else if(typeValue == 0) {
+      swal("Survey NOT Created :(", "A survey type must be selected", "warning");
+      localStorage.setItem("surveyID", (count-1))
     }
     else{
     axios
@@ -97,18 +120,13 @@ export default function CreateSurvey() {
       })
       .then(function (response) {
         insertQuestions();
-        if (response.status === 200) {
-          swal("Survey successfully created!");
-        }
-        if (response.status === 201) {
-          swal("Error!");
-        }
       });
     }
   };
 
   //complete insert questions method
   const insertQuestions = async () => {
+    var count = parseInt(localStorage.getItem("surveyID"));
     var once = false;
     var index = 0; //question ID index variable
     //Insert questions into Questions datatable by mapping through 'matrix'
@@ -124,12 +142,20 @@ export default function CreateSurvey() {
           if(once) {
             insertResponseOptions();
             once = false;
+            if (response.status === 200) {
+              swal("Survey successfully created!");
+              window.location.reload()
+            }
+            if (response.status === 201) {
+              swal("Error!");
+            }
           }
         });
     });
   };
 
   const insertResponseOptions = () => {
+    var count = parseInt(localStorage.getItem("surveyID"));
     var index = 0;
     matrix.map(function(element) {
       index = index+1;

@@ -135,6 +135,17 @@ app.post("/api/getUserSurveys", async (req, res) => {
   });
 });
 
+//delete a survey
+app.post("/api/deleteSurvey", (req, res) => {
+  var id = req.body.sid;
+  var query = "DELETE FROM Survey WHERE Survey_ID = ?";
+
+  connection.invokeQuery(query, [id], function(rows) {
+    console.log(rows);
+    res.send(rows);
+  });
+});
+
 //update a survey
 app.put("/api/updateSurvey/:id", (req, res) => {
   const id = req.param.id;
@@ -153,18 +164,6 @@ app.put("/api/updateSurvey/:id", (req, res) => {
       res.send(result);
     }
   );
-});
-
-//delete a survey
-app.delete("/api/deleteSurvey/:id", (req, res) => {
-  const id = req.params.id;
-
-  query("DELETE FROM Survey WHERE Survey_ID = ?", id, (err, result) => {
-    if (err) {
-      console.log(err);
-    }
-    res.send(result);
-  });
 });
 
 //add a survey question
