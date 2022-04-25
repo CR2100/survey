@@ -19,7 +19,7 @@ build-pages:
 pages:
   stage: deploy
   script:
-    -ls
+  
   artifacts:
     paths:
       - public
