@@ -19,9 +19,9 @@ build-pages:
 pages:
   stage: deploy
   script:
-  - CI=false npm run start1
+  - each "deployed something lol"
   artifacts:
     paths:
       - public
-  # only:
-  #   - master
+  only:
+    - master
