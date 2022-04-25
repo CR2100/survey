@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import swal from "sweetalert";
 
 export default function MySurveys({ currUser }) {
   // mySurveys will hold an array of surveys returned from the API call to the database
@@ -8,6 +9,28 @@ export default function MySurveys({ currUser }) {
 
   const reroute = () => {
     window.location.href = '/createSurvey'
+  }
+
+  const handleDelete = (element) => {
+    var deleted = parseInt(localStorage.getItem("lastSurvey"))
+    console.log("current deleted id: " + deleted)
+    if((deleted == null) || isNaN(deleted) || (deleted < element.Survey_ID)) {
+      localStorage.setItem("lastSurvey", element.Survey_ID);
+      console.log("current deleted id: " + localStorage.getItem("lastSurvey"))
+    }
+
+    axios.post("http://localhost:3001/api/deleteSurvey", {
+      sid: element.Survey_ID
+    
+    }).then(function(response) {
+      console.log(response)
+      if (response.status === 200) {
+        window.location.reload()
+      }
+      if (response.status === 201) {
+        swal("Error!");
+      }     
+    })
   }
 
   useEffect(() => {
@@ -62,6 +85,9 @@ export default function MySurveys({ currUser }) {
                   </button>
                   <button class="pushable marginLeft">
                     <span class="front smallButton">View Responses</span>
+                  </button>
+                  <button class="pushable marginLeft">
+                    <span class="front smallButton" onClick = {(e) => handleDelete(val)}>Delete</span>
                   </button>
                 </td>
               </tr>
