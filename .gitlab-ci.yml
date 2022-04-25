@@ -19,8 +19,7 @@ build-pages:
 pages:
   stage: deploy
   script:
-    - CI=false npm run startNode
-    - CI=false npm run start1  
+    -ls
   artifacts:
     paths:
       - public
