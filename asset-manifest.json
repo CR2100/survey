@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/survey-maker-web-app/static/css/main.bf7ef406.css",
+    "main.js": "/survey-maker-web-app/static/js/main.d3c4c017.js",
+    "index.html": "/survey-maker-web-app/index.html",
+    "main.bf7ef406.css.map": "/survey-maker-web-app/static/css/main.bf7ef406.css.map",
+    "main.d3c4c017.js.map": "/survey-maker-web-app/static/js/main.d3c4c017.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bf7ef406.css",
+    "static/js/main.d3c4c017.js"
+  ]
+}
